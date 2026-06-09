@@ -1,0 +1,26 @@
+# Generados en ejecución local
+resultados.html
+resultados.csv
+raw_data.json
+onpe_data.json
+forecast_history.csv
+test_hist.csv
+
+# Scripts solo-locales
+analisis.py
+validate_r1.py
+fetch_r1.py
+verify.py
+verify2.py
+test_one.py
+server.py
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.output
+
+# Vercel build output
+.vercel/

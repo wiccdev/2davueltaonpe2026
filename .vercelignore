@@ -1,0 +1,15 @@
+# Archivos generados / solo-locales (no subir a Vercel)
+resultados.html
+resultados.csv
+raw_data.json
+onpe_data.json
+forecast_history.csv
+test_hist.csv
+analisis.py
+validate_r1.py
+fetch_r1.py
+verify.py
+verify2.py
+__pycache__/
+*.pyc
+*.output
