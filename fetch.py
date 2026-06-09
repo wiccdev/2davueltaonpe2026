@@ -8,7 +8,9 @@ Uso:  python fetch.py
 """
 import csv, json, sys, os, subprocess
 from concurrent.futures import ThreadPoolExecutor, as_completed
-from datetime import datetime
+from datetime import datetime, timezone, timedelta
+
+PET = timezone(timedelta(hours=-5))   # Hora de Perú (UTC-5)
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 
@@ -291,7 +293,7 @@ def extract(c):
 
 def fmt_ts(ts):
     try:
-        return datetime.fromtimestamp(ts / 1000).strftime("%d/%m/%Y %H:%M")
+        return datetime.fromtimestamp(ts / 1000, tz=PET).strftime("%d/%m/%Y %H:%M")
     except Exception:
         return ""
 
@@ -506,7 +508,7 @@ def log_history(fc, pct_c, gap_v, path="forecast_history.csv"):
         return
     fp = os.path.join(_data_dir(), path)
     new = {
-        "ts": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        "ts": datetime.now(PET).strftime("%Y-%m-%d %H:%M:%S"),
         "pct_c": f"{pct_c:.3f}", "p_keiko": f"{fc['p_keiko']*100:.2f}",
         "margin_med": f"{fc['margin_med']:.0f}",
         "k_final": f"{fc['k_final_pct']:.3f}", "s_final": f"{fc['s_final_pct']:.3f}",
@@ -762,7 +764,7 @@ def build_html(data, auto_refresh=0):
     tot_pend = int(ft.get("pendientesJee", 0) or 0)
     pct_jee  = float(ft.get("actasEnviadasJee",   0) or 0)
     pct_pend = float(ft.get("actasPendientesJee", 0) or 0)
-    gen_ts   = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+    gen_ts   = datetime.now(PET).strftime("%d/%m/%Y %H:%M:%S")
 
     avg_vpa    = tot_v / max(tot_c, 1)
     actas_falt = tot_jee + tot_pend
