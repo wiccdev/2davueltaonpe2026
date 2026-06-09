@@ -17,7 +17,10 @@ if ROOT not in sys.path:
 import fetch  # noqa: E402
 
 # Caché en el edge: 1 generación por minuto máx., sirve cacheado el resto.
-CACHE = "public, s-maxage=60, stale-while-revalidate=120"
+CACHE = "public, max-age=0, s-maxage=60, stale-while-revalidate=120"
+# max-age=0: browser no cachea el HTML (siempre pide al edge)
+# s-maxage=60: el edge de Vercel cachea 60s (máx 1 fetch a ONPE por minuto)
+# stale-while-revalidate=120: edge sirve stale mientras regenera en background
 
 def _fetch_districts():
     # ONPE_FETCH_DEPTH=province  → más liviano (~300 reqs) y rápido si hay timeouts/bloqueos

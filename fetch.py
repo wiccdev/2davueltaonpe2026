@@ -974,12 +974,16 @@ def build_html(data, auto_refresh=0):
                              "Sánchez votos","Sánchez %","Votos válidos",
                              "Líder","Diferencia","Pend. / est.","Actualizado"])
 
-    refresh_tag = f"<meta http-equiv='refresh' content='{auto_refresh if auto_refresh else 60}'>\n"
+    # JS reload es más fiable que <meta refresh> (Chrome throttlea meta en tabs background)
+    secs = auto_refresh if auto_refresh else 60
+    refresh_js = (
+        f"<script>setTimeout(function(){{location.reload();}},{secs * 1000});</script>\n"
+        if auto_refresh else ""
+    )
     html = (
         "<!DOCTYPE html>\n<html lang='es'>\n<head>\n"
         "<meta charset='UTF-8'>\n"
         "<meta name='viewport' content='width=device-width,initial-scale=1'>\n"
-        + refresh_tag +
         "<title>Resultados ONPE 2026 — Segunda Vuelta</title>\n"
         "<style>\n"
         "*{box-sizing:border-box;margin:0;padding:0}\n"
@@ -1010,7 +1014,9 @@ def build_html(data, auto_refresh=0):
         + "<tbody>\n"
         + "\n".join(rows)
         + "\n</tbody></table></div>\n"
-        + "</div>\n</body>\n</html>"
+        + "</div>\n"
+        + refresh_js
+        + "</body>\n</html>"
     )
     return html
 
