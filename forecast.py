@@ -185,7 +185,7 @@ def montecarlo_forecast(data, extract_fn, *,
                         sigma_sys=0.012,      # swing sistemático global correlacionado
                         sigma_jee=0.025,      # swing extra de actas OBSERVADAS
                         s_jee_unit=0.03,      # idiosincrático por unidad observada
-                        m_mean=0.85, m_sd=0.15,  # materialización actas observadas
+                        m_mean=0.97, m_sd=0.05,  # materialización actas observadas (histórico JNE: anulación 0.26-0.56% → m≈0.997)
                         seed=12345):
     if here is None:
         here = os.path.dirname(os.path.abspath(__file__))

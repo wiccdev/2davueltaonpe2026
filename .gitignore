@@ -24,3 +24,6 @@ __pycache__/
 
 # Vercel build output
 .vercel/
+
+# Análisis local temporal
+fresh_data.json
