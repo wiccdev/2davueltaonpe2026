@@ -932,13 +932,13 @@ def build_html(data, auto_refresh=0):
     rows = [
         section_div("🌐 Total Nacional (Perú + Exterior)"),
         build_row(full_tot, None, BG_TOT, avg_vpa),
-        section_toggle("🇵🇪 Perú", "peru"),
-        build_row(peru_tot, None, BG_TOT, avg_vpa, parent_id="peru", start_hidden=False),
+        section_toggle("🇵🇪 Perú", "peru", expanded=False),
+        build_row(peru_tot, None, BG_TOT, avg_vpa, parent_id="peru", start_hidden=True),
     ]
     for i, dept in enumerate(depts):
         d_id = f"d-{dept['id']}"
         rows.append(build_row(dept, i+1, BG1 if i%2==0 else BG2, avg_vpa,
-                               level=1, toggle_id=d_id, parent_id="peru", start_hidden=False))
+                               level=1, toggle_id=d_id, parent_id="peru", start_hidden=True))
         for prov in dept.get("provincias", []):
             p_id = f"p-{prov['id']}"
             has_children = bool(prov.get("distritos"))
@@ -950,12 +950,12 @@ def build_html(data, auto_refresh=0):
                 rows.append(build_row(dist, None, BG1, avg_vpa,
                                        level=3, parent_id=p_id))
 
-    rows.append(section_toggle("🌍 Exterior", "ext"))
-    rows.append(build_row(ext, None, BG_TOT, avg_vpa, parent_id="ext", start_hidden=False))
+    rows.append(section_toggle("🌍 Exterior", "ext", expanded=False))
+    rows.append(build_row(ext, None, BG_TOT, avg_vpa, parent_id="ext", start_hidden=True))
     for i, cont in enumerate(conts):
         c_id = f"d-{cont['id']}"
         rows.append(build_row(cont, None, BG1 if i%2==0 else BG2, avg_vpa,
-                               level=1, toggle_id=c_id, parent_id="ext", start_hidden=False))
+                               level=1, toggle_id=c_id, parent_id="ext", start_hidden=True))
         for pais in cont.get("provincias", []):
             p_id = f"p-{pais['id']}"
             has_cities = bool(pais.get("distritos"))
